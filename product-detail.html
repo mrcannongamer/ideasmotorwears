@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: #000;
+        }
+
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at bottom, #1b2735 0%, #090a0f 100%);
+            z-index: -1;
+        }
+
+        .galaxy {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 6px #fff;
+            animation: moveStars 20s linear infinite;
+        }
+
+        @keyframes moveStars {
+            from {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-100vh) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        #product-detail {
+            text-align: left;
+            padding: 100px; /* Increased padding for a larger card */
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            display: flex;
+            max-width: 90%; /* Adjusted maximum width */
+            margin: 0 auto;
+        }
+
+        #product-image-container {
+            position: relative;
+            overflow: hidden;
+            max-width: 450px; /* Increased image size */
+            height: auto;
+            border: 2px solid #fff;
+            border-radius: 10px;
+            margin-right: 30px;
+        }
+
+        #product-image {
+            display: block;
+            width: 100%;
+            height: auto;
+            transition: transform 0.3s ease-out;
+            transform-origin: center center;
+        }
+
+        #product-image:hover {
+            transform: scale(1.5); /* Zoom in effect on hover */
+        }
+
+        #product-details {
+            flex: 1;
+        }
+
+        #product-title {
+            font-size: 2.5em; /* Slightly increased font size */
+            margin-bottom: 10px;
+        }
+
+        #product-description {
+            font-size: 1.3em; /* Slightly increased font size */
+            color: #ddd;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        #product-price {
+            font-size: 2em; /* Increased font size for price */
+            color: #0f0;
+            margin-bottom: 20px;
+        }
+
+        #back-arrow {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0);
+            border-radius: 0%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000; /* Ensure it's above other content */
+        }
+
+        #back-arrow:hover {
+            background-color: rgba(255, 255, 255, 0); /* Darken on hover */
+        }
+
+        #back-arrow svg {
+            width: 30px; /* Adjust size of SVG icon */
+            height: 30px;
+            stroke: #000; /* Adjust stroke color */
+            stroke-width: 2; /* Adjust stroke width */
+            fill: none;
+            transition: transform 0.3s ease-out; /* Smooth transform on hover */
+        }
+
+        #back-arrow:hover svg {
+            transform: scale(1.2); /* Scale up on hover */
+        }
+
+                /* Add mobile-specific styles */
+                @media only screen and (max-width: 768px) {
+            body {
+                font-size: 16px; /* Adjust font size for mobile */
+            }
+
+            #product-detail {
+                padding: 20px; /* Reduce padding for mobile */
+                flex-direction: column; /* Stack elements vertically on mobile */
+            }
+
+            #product-image-container {
+                max-width: 100%; /* Make image container full-width on mobile */
+                height: auto;
+                margin-bottom: 20px; /* Add margin between image and details */
+            }
+
+            #product-image {
+                width: 100%; /* Make image full-width on mobile */
+                height: auto;
+            }
+
+            #product-details {
+                flex: 1;
+                padding: 20px; /* Add padding to details section on mobile */
+            }
+
+            #product-title {
+                font-size: 1.5em; /* Reduce font size for mobile */
+            }
+
+            #product-description {
+                font-size: 1em; /* Reduce font size for mobile */
+            }
+
+            #product-price {
+                font-size: 1.2em; /* Reduce font size for mobile */
+            }
+
+            #back-arrow {
+                top: 10px; /* Adjust back arrow position for mobile */
+                left: 10px;
+                width: 30px; /* Reduce back arrow size for mobile */
+                height: 30px;
+            }
+        }
+
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const productData = JSON.parse(localStorage.getItem('productData'));
+            console.log(`Product Data:`, productData); // Debug log
+
+            if (productData) {
+                document.getElementById('product-title').textContent = productData.title;
+                document.getElementById('product-price').textContent = productData.price;
+                document.getElementById('product-image').src = productData.image;
+                document.getElementById('product-description').textContent = productData.description;
+            } else {
+                document.getElementById('product-detail').textContent = 'Product not found';
+            }
+
+            // Mouse move zoom effect
+            const productImage = document.getElementById('product-image');
+            const container = document.getElementById('product-image-container');
+
+            container.addEventListener('mousemove', function (e) {
+                const x = e.pageX - container.offsetLeft;
+                const y = e.pageY - container.offsetTop;
+
+                const centerX = container.offsetWidth / 2;
+                const centerY = container.offsetHeight / 2;
+
+                const moveX = (x - centerX) / centerX * 10; // Adjust the zoom strength
+                const moveY = (y - centerY) / centerY * 10;
+
+                productImage.style.transform = `scale(1.5) translate(${moveX}px, ${moveY}px)`;
+            });
+
+            container.addEventListener('mouseleave', function () {
+                productImage.style.transform = 'scale(1) translate(0, 0)';
+            });
+
+            function createStar() {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = `${Math.random() * 100}vw`;
+                star.style.top = `${Math.random() * 100}vh`;
+                star.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                document.querySelector('.galaxy').appendChild(star);
+
+                setTimeout(() => {
+                    star.remove();
+                }, 20000); // Adjust the timeout to match the animation duration
+            }
+
+            setInterval(createStar, 200); // Adjust the interval to control the density of stars
+        });
+    </script>
+</head>
+<body>
+    <a id="back-arrow" href="products.html">
+        <button class="cursor-pointer duration-200 hover:scale-125 active:scale-100" title="Go Back">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="stroke-blue-300">
+                <path stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5" d="M11 6L5 12M5 12L11 18M5 12H19"></path>
+            </svg>
+        </button>
+    </a>
+    <div class="background-container"></div>
+    <div class="galaxy"></div>
+    <div id="product-detail">
+        <div id="product-image-container">
+            <img id="product-image" src="" alt="Product Image">
+        </div>
+        <div id="product-details">
+            <h1 id="product-title"></h1>
+            <p id="product-description"></p>
+            <p id="product-price"></p>
+        </div>
+    </div>
+</body>
+</html>

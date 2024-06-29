@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+    
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: radial-gradient(ellipse at bottom, #0d1d31 0%, #0c0d13 100%);
+    }
+    
+    .stars {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transform: rotate(-45deg);
+    }
+    
+    .star {
+        --star-color: #ffffff; /* Customize star color if needed */
+        --star-tail-length: 6em;
+        --star-tail-height: 2px;
+        --star-width: calc(var(--star-tail-length) / 6);
+        --fall-duration: 9s;
+        --tail-fade-duration: var(--fall-duration);
+    
+        position: absolute;
+        top: var(--top-offset);
+        left: 0;
+        width: var(--star-tail-length);
+        height: var(--star-tail-height);
+        color: var(--star-color);
+        background: linear-gradient(45deg, currentColor, transparent);
+        border-radius: 50%;
+        filter: drop-shadow(0 0 6px currentColor);
+        transform: translate3d(104em, 0, 0);
+        animation: fall var(--fall-duration) var(--fall-delay) linear infinite, tail-fade var(--tail-fade-duration) var(--fall-delay) ease-out infinite;
+    
+
+    
+        &::before, &::after {
+            position: absolute;
+            content: '';
+            top: 0;
+            left: calc(var(--star-width) / -2);
+            width: var(--star-width);
+            height: 100%;
+            background: linear-gradient(45deg, transparent, currentColor, transparent);
+            border-radius: inherit;
+            animation: blink 2s linear infinite;
+        }
+    
+        &::before {
+            transform: rotate(45deg);
+        }
+    
+        &::after {
+            transform: rotate(-45deg);
+        }
+    }
+    
+    @keyframes fall {
+        to {
+            transform: translate3d(-30em, 0, 0);
+        }
+    }
+    
+    @keyframes tail-fade {
+        0%, 50% {
+            width: var(--star-tail-length);
+            opacity: 1;
+        }
+    
+        70%, 80% {
+            width: 0;
+            opacity: 0.4;
+        }
+    
+        100% {
+            width: 0;
+            opacity: 0;
+        }
+    }
+    
+    @keyframes blink {
+        50% {
+            opacity: 0.6;
+        }
+    }
+    
+    .content {
+        position: relative;
+        z-index: 1;
+        max-width: 800px;
+        padding: 40px;
+        color: #fff;
+        text-align: center;
+    }
+    
+    header {
+        margin-bottom: 40px;
+    }
+    
+    header h1 {
+        font-size: 3em;
+        margin-bottom: 10px;
+    }
+    
+    header p {
+        font-size: 1.2em;
+        margin-bottom: 20px;
+    }
+    
+    main {
+        text-align: left;
+    }
+    
+    section {
+        margin-bottom: 40px;
+    }
+    
+    section h2 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #fff;
+        padding-bottom: 5px;
+    }
+    
+    section p {
+        font-size: 1.2em;
+        line-height: 1.6;
+    }
+    
+    section ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    
+    section ul li {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+    }
+
+
+    .back-link {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: inline-block;
+    padding: 10px 15px;
+    color: #fff;
+    text-decoration: none;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.back-link:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.back-link span {
+    margin-right: 5px;
+}
+
+.social-icon {
+    display: inline-block;
+    margin: 10px;
+}
+
+.social-icons {
+    position: fixed;
+    transform: translateY(100);
+    bottom: -200px; /* Adjust as needed */
+    left: 20px; /* Adjust as needed */
+    z-index: 1000; /* Ensure icons are on top of other content */
+}
+
+.social-icon {
+    display: inline-block;
+    margin-right: 10px; /* Adjust spacing between icons */
+}
+
+.social-icon img {
+    width: 40px; /* Adjust size of icons as needed */
+    height: 40px;
+    border-radius: 50%; /* Ensure icons are circular */
+    transition: transform 0.3s ease;
+}
+
+.social-icon:hover img {
+    transform: scale(1.1); /* Zoom in effect on hover */
+}
+
+        /* Add mobile-specific styles */
+        @media only screen and (max-width: 768px) {
+            body {
+                font-size: 14px; /* Adjust font size for mobile */
+            }
+
+            .content {
+                padding: 20px; /* Reduce padding for mobile */
+            }
+
+            header {
+                margin-bottom: 20px; /* Reduce margin for mobile */
+            }
+
+            header h1 {
+                font-size: 2em; /* Reduce font size for mobile */
+            }
+
+            header p {
+                font-size: 1em; /* Reduce font size for mobile */
+            }
+
+            main {
+                text-align: left;
+            }
+
+            section {
+                margin-bottom: 20px; /* Reduce margin for mobile */
+            }
+
+            section h2 {
+                font-size: 1.8em; /* Reduce font size for mobile */
+            }
+
+            section p {
+                font-size: 1em; /* Reduce font size for mobile */
+            }
+
+            section ul {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            section ul li {
+                font-size: 1em; /* Reduce font size for mobile */
+            }
+
+            .back-link {
+                position: absolute;
+                top: 10px; /* Adjust position for mobile */
+                left: 10px;
+                padding: 5px 10px; /* Reduce padding for mobile */
+            }
+
+            .social-icons {
+                position: fixed;
+                bottom: 10px; /* Adjust position for mobile */
+                left: 10px;
+            }
+
+            .social-icon {
+                margin-right: 5px; /* Reduce margin for mobile */
+            }
+
+            .social-icon img {
+                width: 30px; /* Reduce size of icons for mobile */
+                height: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="main.html" class="back-link"><span>&#8592;</span> Back</a>
+
+
+    <div class="stars">
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+
+        <!-- Add more stars as needed -->
+    </div>
+    
+    <div class="content">
+        <header>
+            <h1>About | Ideas Motorwears</h1>
+            <p>Welcome to Ideas Motorwears, where passion meets performance.</p>
+            
+        </header>
+        <main>
+            <section id="company-info">
+                <h2>Company Information</h2>
+                <p>We specialize in crafting high-performance motorwear designed for enthusiasts who demand style and safety in every ride...</p>
+            </p>Quality is at the heart of everything we do. Each piece of motorwear is meticulously designed and tested to meet the highest standards of durability, comfort, and safety.</p>
+            </section>
+            <section id="mission">
+                <h2>Our Mission</h2>
+                <p>At ideas Motorwears, our mission is to redefine motorwear with innovation and quality. We strive to provide riders with gear that not only enhances their riding experience but also ensures utmost protection..</p>
+            </section>
+            <section id="values">
+                <h2>Our Values</h2>
+                <ul>
+                    <li>Quality</li>
+                    <li>Innovation</li>
+                    <li>Creativity</li>
+                    <li>Safety</li>
+                </ul>
+            </section>
+            <section id="team">
+                <h2>Our Team</h2>
+                <p>We have a passionate team.</p>
+            </section>
+        </main>
+    </div>
+
+
+
+</div>
+
+
+
+    <a href="https://facebook.com" target="_blank" class="social-icon">
+        <img src="D:\IDEA\imgs\facebook.png" alt="Facebook">
+    </a>
+    
+    <a href="https://instagram.com" target="_blank" class="social-icon">
+        <img src="D:\IDEA\imgs\instagram.png" alt="Instagram">
+
+    </a>
+
+
+
+</div>
+
+</body>
+</html>
